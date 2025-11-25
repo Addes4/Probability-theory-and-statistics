@@ -5,7 +5,7 @@
 import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
-import tools
+import Data_and_tools as tools
 
 
 n = 25
@@ -40,7 +40,7 @@ for k in range(m):
     else:
         color = 'b'
     plt.plot([undre[k], övre[k]], [k, k], color)
-    
+
 # Fixa till gränserna så att figuren ser lite bättre ut.
 b_min = np.min(undre)
 
