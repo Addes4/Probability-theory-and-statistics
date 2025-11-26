@@ -7,7 +7,6 @@ from scipy import stats
 import matplotlib.pyplot as plt
 import Data_and_tools as tools
 
-
 n = 25
 # Väntevärdet
 mu = 2
