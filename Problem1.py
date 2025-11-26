@@ -46,7 +46,7 @@ b_min = np.min(undre)
 
 b_max = np.max(övre)
 plt.axis([b_min, b_max, -1, m])
-# Rita ut det sanna  värdet.
+# Rita ut det sanna värdet.
 plt.plot([mu, mu], [-1, m], 'g')
 # Visa plotten.
 plt.show()
