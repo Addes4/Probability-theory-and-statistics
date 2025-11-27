@@ -12,8 +12,8 @@ x = stats.rayleigh.rvs(scale=b, size=M)
 # Skapa figur och plotta histogrammet.
 plt.figure()
 plt.hist(x, 40, density=True)
-est_ml = np.sqrt(np.mean(x**2) / 2) # Skriv din ML-skattning här (ej rätt just nu)
-est_mk = np.sqrt(2/np.pi) * np.mean(x) # Skriv din MK-skattning här (ej rätt just nu)
+est_ml = np.sqrt(np.mean(x**2) / 2) # Skriv din ML-skattning här
+est_mk = np.sqrt(2/np.pi) * np.mean(x) # Skriv din MK-skattning här
 # Plotta de två skattningarna.
 plt.plot(est_ml, 0.2, 'r*', markersize=10)
 plt.plot(est_mk, 0.2, 'g*', markersize=10)
