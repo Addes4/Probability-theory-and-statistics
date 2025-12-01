@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 import Data_and_tools as tools
 
 # Ladda data.
-y = np.loadtxt('wave_data.dat')
+y = np.loadtxt('Data_and_tools/wave_data.dat')
+
 # Plotta en bit av signalen samt histogrammet.
 plt.figure(figsize=(4, 8))
 plt.subplot(2, 1, 1)
@@ -14,6 +15,22 @@ plt.plot(y[:100])
 plt.subplot(2, 1, 2)
 plt.hist(y, density=True)
 plt.show()
+
+# Skatta parametern på samma sätt som i Problem 2.
+est = np.sqrt(np.mean(y**2) / 2)
+
+# Ta fram ett konfidensintervall för skattningen.
+# För Rayleigh-fördelning: asymptotisk varians är σ²/(2n)
+# Vi använder normal approximation för 95% konfidensintervall
+alpha = 0.05
+n = len(y)
+# Standard error
+se = est / np.sqrt(2 * n)
+# Kvantil för normal approximation
+z_alpha_2 = stats.norm.ppf(1 - alpha / 2)
+# Konfidensintervall
+lower_bound = est - z_alpha_2 * se
+upper_bound = est + z_alpha_2 * se
 
 ## Problem 3: Konfidensintervall (forts.)
 # Plotta histogrammet och skattningen.
