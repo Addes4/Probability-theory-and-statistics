@@ -20,7 +20,7 @@ plt.show()
 est = np.sqrt(np.mean(y**2) / 2)
 
 # Ta fram ett konfidensintervall för skattningen.
-# För Rayleigh-fördelning: asymptotisk varians är σ²/(2n)
+# För Rayleigh-fördelning: asymptotisk varians är sigma^2/(2n)
 # Vi använder normal approximation för 95% konfidensintervall
 alpha = 0.05
 n = len(y)
