@@ -20,7 +20,7 @@ birth_weight = birth_weight[~np.isnan(birth_weight)]
 
 # 2. Moderns ålder (kolonn 4, index 3)
 mother_age = birth[:, 3]
-
+mother_age = mother_age[~np.isnan(mother_age)]
 
 # 3. Moderns längd (kolonn 16, index 15)
 mother_height = birth[:, 15]
@@ -43,7 +43,7 @@ plt.grid(True, alpha=0.3)
 
 # Histogram 2: Moderns ålder
 plt.subplot(2, 2, 2)
-plt.hist(mother_age, bins=40, density=True, edgecolor='black')
+plt.hist(mother_age, bins=26, density=True, edgecolor='black')
 plt.xlabel('Ålder (år)')
 plt.ylabel('Täthet')
 plt.title('Moderns ålder')
@@ -125,3 +125,44 @@ plt.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.show()
 label_x = 'Kärnestimator för födelsevikt för icke-rökare'
+
+
+# extra undersökning
+
+non_drinkers = (birth[:, 25] < 2)
+drinkers = (birth[:, 25] == 2)
+
+z2 = birth[drinkers, 2]
+z2 = z2[~np.isnan(z2)]
+z = birth[non_drinkers, 2]
+z = z[~np.isnan(z)]
+
+kde_z = stats.gaussian_kde(z)
+kde_z2 = stats.gaussian_kde(z2)
+
+plt.subplot(2, 2, 1)
+plt.boxplot(z, labels=['Non-drinkers'])
+plt.ylabel('Födelsevikt (gram)')
+plt.title('Födelsevikt: Non-drinkers')
+plt.axis([0, 2, 500, 5000])
+plt.grid(True, alpha=0.3)
+
+plt.subplot(2, 2, 2)
+plt.boxplot(z2, labels=['Drinkers'])
+plt.ylabel('Födelsevikt (gram)')
+plt.title('Födelsevikt: Drinkers')
+plt.axis([0, 2, 500, 5000])
+plt.grid(True, alpha=0.3)
+
+plt.subplot(2, 2, (3, 4))
+plt.plot(grid, kde_z(grid), 'b', label='Non-drinkers', linewidth=2)
+plt.plot(grid, kde_z2(grid), 'r', label='Drinkers', linewidth=2)
+plt.xlabel('Födelsevikt (gram)')
+plt.ylabel('Täthet')
+plt.title('Jämförelse: Kärnestimatorer för födelsevikt')
+plt.legend()
+plt.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
+label_x = 'Kärnestimator för födelsevikt för non-drinkers'
