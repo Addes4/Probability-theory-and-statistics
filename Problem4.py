@@ -6,7 +6,67 @@ import matplotlib.pyplot as plt
 import Data_and_tools as tools
 
 # Ladda datafilen.
-birth = np.loadtxt('birth.dat')
+birth = np.loadtxt('Data_and_tools/birth.dat')
+
+## Problem 4: Histogram för olika variabler
+# Skapa fyra histogram för att undersöka fördelningarna
+# Extrahera variablerna (kolonn 3, 4, 15, 16)
+# Notera: indexering börjar med 0, så kolonn 3 är index 2, etc.
+
+# 1. Barnets födelsevikt (kolonn 3, index 2)
+birth_weight = birth[:, 2]
+# Filtrera bort NaN-värden
+birth_weight = birth_weight[~np.isnan(birth_weight)]
+
+# 2. Moderns ålder (kolonn 4, index 3)
+mother_age = birth[:, 3]
+
+
+# 3. Moderns längd (kolonn 16, index 15)
+mother_height = birth[:, 15]
+mother_height = mother_height[~np.isnan(mother_height)]
+
+# 4. Moderns vikt (kolonn 15, index 14)
+mother_weight = birth[:, 14]
+mother_weight = mother_weight[~np.isnan(mother_weight)]
+
+# Skapa figur med fyra histogram
+plt.figure(figsize=(12, 10))
+
+# Histogram 1: Barnets födelsevikt
+plt.subplot(2, 2, 1)
+plt.hist(birth_weight, bins=40, density=True, edgecolor='black')
+plt.xlabel('Födelsevikt (gram)')
+plt.ylabel('Täthet')
+plt.title('Barnets födelsevikt')
+plt.grid(True, alpha=0.3)
+
+# Histogram 2: Moderns ålder
+plt.subplot(2, 2, 2)
+plt.hist(mother_age, bins=40, density=True, edgecolor='black')
+plt.xlabel('Ålder (år)')
+plt.ylabel('Täthet')
+plt.title('Moderns ålder')
+plt.grid(True, alpha=0.3)
+
+# Histogram 3: Moderns längd
+plt.subplot(2, 2, 3)
+plt.hist(mother_height, bins=40, density=True, edgecolor='black')
+plt.xlabel('Längd (cm)')
+plt.ylabel('Täthet')
+plt.title('Moderns längd')
+plt.grid(True, alpha=0.3)
+
+# Histogram 4: Moderns vikt
+plt.subplot(2, 2, 4)
+plt.hist(mother_weight, bins=40, density=True, edgecolor='black')
+plt.xlabel('Vikt (kg)')
+plt.ylabel('Täthet')
+plt.title('Moderns vikt')
+plt.grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.show()
 # Definiera filter beroende på om modern röker (kolonn 20
 # är 3) eller inte (kolonn 20 är 1 eller 2). Notera att
 # eftersom indexering i Python börjar med noll så betecknas
@@ -14,33 +74,54 @@ birth = np.loadtxt('birth.dat')
 non_smokers = (birth[:, 19] < 3)
 smokers = (birth[:, 19] == 3)
 # Extrahera födelsevikten (kolonn 3) för de två kategorierna.
+# Filtrera bort NaN-värden
 x = birth[non_smokers, 2]
+x = x[~np.isnan(x)]
 y = birth[smokers, 2]
+y = y[~np.isnan(y)]
 
 ## Problem 4: Fördelningar av givna data (forts.)
 # Skapa en stor figur.
 plt.figure(figsize=(8, 8))
-# Plotta ett låddiagram över x.
+# Plotta ett låddiagram över icke-rökare (x).
 plt.subplot(2, 2, 1)
-plt.boxplot(x)
+plt.boxplot(x, labels=['Icke-rökare'])
+plt.ylabel('Födelsevikt (gram)')
+plt.title('Födelsevikt: Icke-rökare')
 plt.axis([0, 2, 500, 5000])
+plt.grid(True, alpha=0.3)
 
-# Plotta ett låddiagram över y.
+# Plotta ett låddiagram över rökare (y).
 plt.subplot(2, 2, 2)
-plt.boxplot(y)
+plt.boxplot(y, labels=['Rökare'])
+plt.ylabel('Födelsevikt (gram)')
+plt.title('Födelsevikt: Rökare')
 plt.axis([0, 2, 500, 5000])
+plt.grid(True, alpha=0.3)
+
 # Beräkna kärnestimator för x och y. Funktionen
 # gaussian_kde returnerar ett funktionsobjekt som sedan
 # kan evalueras i godtyckliga punkter.
 kde_x = stats.gaussian_kde(x)
 kde_y = stats.gaussian_kde(y)
+
 # Skapa ett rutnät för vikterna som vi kan använda för att
 # beräkna kärnestimatorernas värden.
-min_val = np.min(birth[:, 2])
-max_val = np.max(birth[:, 2])
+# Använd birth_weight som redan är definierad och filtrerad från NaN
+min_val = np.min(birth_weight)
+max_val = np.max(birth_weight)
 grid = np.linspace(min_val, max_val, 60)
+
 # Plotta kärnestimatorerna.
 plt.subplot(2, 2, (3, 4))
-plt.plot(grid, kde_x(grid), 'b')
-plt.plot(grid, kde_y(grid), 'r')
+plt.plot(grid, kde_x(grid), 'b', label='Icke-rökare', linewidth=2)
+plt.plot(grid, kde_y(grid), 'r', label='Rökare', linewidth=2)
+plt.xlabel('Födelsevikt (gram)')
+plt.ylabel('Täthet')
+plt.title('Jämförelse: Kärnestimatorer för födelsevikt')
+plt.legend()
+plt.grid(True, alpha=0.3)
+
+plt.tight_layout()
 plt.show()
+label_x = 'Kärnestimator för födelsevikt för icke-rökare'
