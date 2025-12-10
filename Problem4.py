@@ -176,4 +176,4 @@ label_x = 'Kärnestimator för födelsevikt för non-drinkers'
 #Skriver ut hur många kvinnor från varje grupp, alltså drickande och ickedricanke
 antal_nondrinker = np.shape(z2)
 antal_drinker = np.shape(z)
-print('Hej hej', antal_nondrinker, antal_drinker)
+print(antal_nondrinker, antal_drinker)
