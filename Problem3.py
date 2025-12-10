@@ -13,7 +13,7 @@ plt.figure(figsize=(4, 8))
 plt.subplot(2, 1, 1)
 plt.plot(y[:100])
 plt.subplot(2, 1, 2)
-plt.hist(y, density=True)
+plt.hist(y, 40, density=True)
 plt.show()
 
 # Skatta parametern på samma sätt som i Problem 2.
