@@ -69,16 +69,11 @@ variables = {
     'Moderns vikt': mother_weight
 }
 
-print("\n" + "="*60)
-print("JARQUE-BERA TEST")
-print("Signifikansnivå: 5% (alpha = 0.05)")
-print("="*60)
-
 # Kritisk värde för chi-kvadrat med 2 frihetsgrader
 chi2_critical = stats.chi2.ppf(1 - ALPHA, df=2)
 
 print(f"\nKritiskt värde (χ² med 2 frihetsgrader): {chi2_critical:.4f}")
-print("\n" + "-"*60)
+
 
 # Utför test för varje variabel
 for var_name, data in variables.items():
@@ -89,9 +84,7 @@ for var_name, data in variables.items():
     is_normal = p_value >= ALPHA
     
     print(f"\n{var_name}:")
-    print(f"  JB-statistik: {jb_stat:.4f}")
     print(f"  p-värde: {p_value:.6f}")
-    print(f"  Kritisk värde: {chi2_critical:.4f}")
     
     if is_normal:
         print(f"  p är större än alfa (p ≥ {ALPHA})")
@@ -104,6 +97,3 @@ for var_name, data in variables.items():
     
     print(f"  Skewness (gamma): {skewness:.4f} (normal = 0)")
     print(f"  Kurtosis (kappa): {kurtosis:.4f} (normal = 0)")
-
-print("\n" + "="*60)
-
