@@ -87,7 +87,7 @@
 \newpage
 
 
-\chapter{Problem 1: ML- och MK-skattning för Rayleigh-fördelning}
+\chapter*{Problem 1: ML- och MK-skattning för Rayleigh-fördelning}
 
 Låt $X$ vara en stokastisk variabel med täthetsfunktion
 \begin{equation}
@@ -165,7 +165,7 @@ där $\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i$ är stickprovsmedelvärdet. Lös ut
 \hat{b}_{\text{MK}} = \frac{\bar{x}}{\sqrt{\pi/2}} = \sqrt{\frac{2}{\pi}} \cdot \bar{x}
 \end{equation}
 
-\chapter{Problem 2: Approximativt konfidensintervall för parametern $b$}
+\chapter*{Problem 2: Approximativt konfidensintervall för parametern $b$}
 
 För att härleda ett approximativt konfidensintervall för parametern $b$ använder vi \textbf{MK-skattningen från Problem 1}, nämligen $\hat{b}_{\text{MK}} = \sqrt{\frac{2}{\pi}} \cdot \bar{X}$, tillsammans med centrala gränsvärdessatsen. Anledningen till att vi använder MK-skattningen istället för ML-skattningen är att MK-skattningen har enklare asymptotiska egenskaper eftersom den är en linjär funktion av stickprovsmedelvärdet $\bar{X}$.
 
@@ -277,7 +277,7 @@ Approximationen är rimlig av följande skäl:
 \item \textbf{Slutna formler för moment:} För Rayleigh-fördelningen finns slutna formler för momenten, vilket gör variansberäkningen exakt.
 \end{enumerate}
 
-\chapter{Problem 3: Linjär regression}
+\chapter*{Problem 3: Linjär regression}
 
 \subsection*{Idén bakom linjär regression}
 
@@ -371,7 +371,7 @@ Funktionen \texttt{regress} använder QR-faktorisering för numerisk stabilitet 
 Konfidensintervallen är baserade på t-fördelningen med $n-2$ frihetsgrader (för enkel linjär regression), vilket är korrekt när feltermerna är normalfördelade.
 
 
-\chapter{Analys av problem4.py}
+\chapter*{Analys av problem4.py}
 
 I detta kapitel analyseras data från \texttt{birth.dat} som innehåller information om 747 första gångers mödrar i Malmö under perioden 1991-1993. Analysen fokuserar på att undersöka fördelningarna för olika variabler samt jämföra födelsevikter mellan rökare och icke-rökare.
 
@@ -438,7 +438,7 @@ Analysen bekräftar flera viktiga observationer:
 
 Dessa resultat är i linje med tidigare forskning som visar att rökning under graviditeten är en av de viktigaste riskfaktorerna för låg födelsevikt och andra komplikationer vid födsel.
 
-\chapter{Analys av problem5.py: Test av normalitet}
+\chapter*{Analys av problem5.py: Test av normalitet}
 
 Många statistiska metoder baseras på antagandet att data är normalfördelat. Det är därför viktigt att kunna avgöra om en given datamängd är normalfördelad eller ej. I detta kapitel använder vi två metoder för att testa normalitet: visuell bedömning med probplot (Q-Q plots) och statistiskt test med Jarque-Bera-testet.
 
