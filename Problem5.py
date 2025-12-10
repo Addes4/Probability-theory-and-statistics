@@ -72,7 +72,7 @@ variables = {
 # Kritisk värde för chi-kvadrat med 2 frihetsgrader
 chi2_critical = stats.chi2.ppf(1 - ALPHA, df=2)
 
-print(f"\nKritiskt värde (χ² med 2 frihetsgrader): {chi2_critical:.4f}")
+print(f"\nKritiskt värde (X^2): {chi2_critical:.4f}")
 
 
 # Utför test för varje variabel
