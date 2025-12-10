@@ -1,4 +1,6 @@
 ## Problem 2: Maximum likelihood, minsta kvadrat
+M = 10000
+b = 4
 
 import numpy as np
 from scipy import stats
@@ -6,9 +8,9 @@ import matplotlib.pyplot as plt
 import Data_and_tools as tools
 
 M = 100000
-b = 4
+B = 4
 # Simulera M utfall med parameter b.
-x = stats.rayleigh.rvs(scale=b, size=M)
+x = stats.rayleigh.rvs(scale=B, size=M)
 # Skapa figur och plotta histogrammet.
 plt.figure()
 plt.hist(x, 40, density=True)
@@ -17,7 +19,7 @@ est_mk = np.sqrt(2/np.pi) * np.mean(x) # Skriv din MK-skattning här
 # Plotta de två skattningarna.
 plt.plot(est_ml, 0.2, 'r*', markersize=10)
 plt.plot(est_mk, 0.2, 'g*', markersize=10)
-plt.plot(b, 0.2, 'bo')
+plt.plot(B, 0.2, 'bo')
 plt.show()
 
 
