@@ -1,6 +1,5 @@
 ## Problem 2: Maximum likelihood, minsta kvadrat
-M = 10000
-b = 4
+
 
 import numpy as np
 from scipy import stats
