@@ -5,13 +5,11 @@ from scipy import stats
 import matplotlib.pyplot as plt
 import Data_and_tools as tools
 
-# Ladda datafilen.
+# Laddar datafilen
 birth = np.loadtxt('Data_and_tools/birth.dat')
 
-## Problem 4: Histogram för olika variabler
-# Skapa fyra histogram för att undersöka fördelningarna
-# Extrahera variablerna (kolonn 3, 4, 15, 16)
-# Notera: indexering börjar med 0, så kolonn 3 är index 2, etc.
+# Skapar histogram för olika variabler, vi tar ut kolonn 3, 4, 15 och 16, 
+# minus 1 för rätt index enligt python
 
 # 1. Barnets födelsevikt (kolonn 3, index 2)
 birth_weight = birth[:, 2]
@@ -20,14 +18,17 @@ birth_weight = birth_weight[~np.isnan(birth_weight)]
 
 # 2. Moderns ålder (kolonn 4, index 3)
 mother_age = birth[:, 3]
+# Filtrera bort NaN-värden
 mother_age = mother_age[~np.isnan(mother_age)]
 
 # 3. Moderns längd (kolonn 16, index 15)
 mother_height = birth[:, 15]
+# Filtrera bort NaN-värden
 mother_height = mother_height[~np.isnan(mother_height)]
 
 # 4. Moderns vikt (kolonn 15, index 14)
 mother_weight = birth[:, 14]
+# Filtrera bort NaN-värden
 mother_weight = mother_weight[~np.isnan(mother_weight)]
 
 # Skapa figur med fyra histogram
@@ -67,21 +68,21 @@ plt.grid(True, alpha=0.3)
 
 plt.tight_layout()
 plt.show()
-# Definiera filter beroende på om modern röker (kolonn 20
-# är 3) eller inte (kolonn 20 är 1 eller 2). Notera att
-# eftersom indexering i Python börjar med noll så betecknas
-# kolonn 20 med indexet 19.
+
+# Filtrerar och sorterar utifrån ifall mödrarna röker eller ej, värde 3 är 
+# rökare och < 3 är icke rökare
 non_smokers = (birth[:, 19] < 3)
 smokers = (birth[:, 19] == 3)
-# Extrahera födelsevikten (kolonn 3) för de två kategorierna.
-# Filtrera bort NaN-värden
+
+# Extraherar födelsevikten för de två kategorierna.
+# Filtrerar bort NaN-värden
 x = birth[non_smokers, 2]
 x = x[~np.isnan(x)]
 y = birth[smokers, 2]
 y = y[~np.isnan(y)]
 
-## Problem 4: Fördelningar av givna data (forts.)
-# Skapa en stor figur.
+
+# Skapar en stor figur som plottar datan på
 plt.figure(figsize=(8, 8))
 # Plotta ett låddiagram över icke-rökare (x).
 plt.subplot(2, 2, 1)
@@ -105,7 +106,7 @@ plt.grid(True, alpha=0.3)
 kde_x = stats.gaussian_kde(x)
 kde_y = stats.gaussian_kde(y)
 
-# Skapa ett rutnät för vikterna som vi kan använda för att
+# Skapar ett rutnät för vikterna som vi kan använda för att
 # beräkna kärnestimatorernas värden.
 # Använd birth_weight som redan är definierad och filtrerad från NaN
 min_val = np.min(birth_weight)
@@ -127,19 +128,24 @@ plt.show()
 label_x = 'Kärnestimator för födelsevikt för icke-rökare'
 
 
-# extra undersökning
+# Extra undersökning, jämför kvinnor som dricker under graviditeten 
+# med de som aldrig dricker eller slutade när de blev gravida
 
+# Tar fram alla de som dricker eller inte dricker
 non_drinkers = (birth[:, 25] < 2)
 drinkers = (birth[:, 25] == 2)
 
+# Definierar variabler vi kan använda för att ta fram kärnestimatorer
 z2 = birth[drinkers, 2]
 z2 = z2[~np.isnan(z2)]
 z = birth[non_drinkers, 2]
 z = z[~np.isnan(z)]
 
+# Tar fram kärnestimatorer
 kde_z = stats.gaussian_kde(z)
 kde_z2 = stats.gaussian_kde(z2)
 
+# Plottar de grafer vi vill ha, två lådagram och en stor linjegraf
 plt.subplot(2, 2, 1)
 plt.boxplot(z, labels=['Non-drinkers'])
 plt.ylabel('Födelsevikt (gram)')
@@ -166,3 +172,8 @@ plt.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.show()
 label_x = 'Kärnestimator för födelsevikt för non-drinkers'
+
+#Skriver ut hur många kvinnor från varje grupp, alltså drickande och ickedricanke
+antal_nondrinker = np.shape(z2)
+antal_drinker = np.shape(z)
+print('Hej hej', antal_nondrinker, antal_drinker)
