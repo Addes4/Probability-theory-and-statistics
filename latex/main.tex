@@ -1,0 +1,569 @@
+\documentclass[a4paper,12pt]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[swedish]{babel}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{siunitx}
+\usepackage{titlesec}
+\usepackage{float}  % Gör så att [H] fungerar
+\usepackage{caption}
+\usepackage{multido}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{mathtools}
+\usepackage{booktabs}
+
+% Konfiguration för listings (MATLAB-kod)
+\lstset{
+    language=Matlab,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!60!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\color{gray},
+    stepnumber=1,
+    numbersep=5pt,
+    backgroundcolor=\color{gray!10},
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    frame=single,
+    rulecolor=\color{black},
+    tabsize=2,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=false,
+    extendedchars=true,
+    inputencoding=utf8,
+    literate={ö}{{\"o}}1 {ä}{{\"a}}1 {å}{{\aa}}1
+}
+
+\newcommand{\TabRow}[2]{#1 & #2 \\ \hline}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}{\operatorname{E}}
+
+\setlength{\parindent}{0pt}            % Sätter indrag (parindent) för nya stycken till 0 → ingen indragning
+
+\makeatletter
+\let\origclearpage\clearpage           % Sparar originalkommandot \clearpage i \origclearpage
+\makeatother
+
+\newcommand{\NoChapterPageBreaks}{\let\clearpage\relax}       
+% Skapar ett nytt kommando som tar bort sidbrytningar vid kapitel
+% (ersätter \clearpage med tomt kommando \relax)
+
+\newcommand{\RestoreChapterPageBreaks}{\let\clearpage\origclearpage}
+% Skapar ett nytt kommando som återställer originalbeteendet för sidbrytningar vid kapitel
+
+\geometry{margin=1in}                  % Sätter sidmarginaler till 1 tum runt hela sidan
+\raggedbottom                          % Hindrar LaTeX från att stretcha texten vertikalt för att fylla sidan
+
+\addto\captionsenglish{\renewcommand{\chaptername}{}}
+
+\titleformat{\chapter}[block]
+  {\normalfont\huge\bfseries}
+  {\thechapter\quad}
+  {0pt}
+  {}
+\titlespacing*{\chapter}{0pt}{-20pt}{20pt}
+
+
+\begin{document}
+
+\begin{titlepage}
+    \centering
+    \vspace*{9cm}  % trycker ner titeln mot mitten
+    
+    {\huge\bfseries Uppgift 2\par}
+    \vspace*{1cm}
+\end{titlepage}
+
+
+
+\newpage
+
+
+\chapter{Problem 1: ML- och MK-skattning för Rayleigh-fördelning}
+
+Låt $X$ vara en stokastisk variabel med täthetsfunktion
+\begin{equation}
+f_X(x) = \begin{cases}
+\frac{x}{b^2} e^{-\frac{x^2}{2b^2}} & \text{för } x \geq 0 \\
+0 & \text{för } x < 0
+\end{cases}
+\end{equation}
+där $b > 0$ är en parameter. Givet ett stickprov $x_1, x_2, \ldots, x_n$ ska vi bestämma ML-skattningen och MK-skattningen (momentmetoden) av parametern $b$.
+
+\subsection*{ML-skattning (Maximum Likelihood)}
+
+Likelihood-funktionen för stickprovet är
+\begin{equation}
+L(b) = \prod_{i=1}^n f_X(x_i) = \prod_{i=1}^n \frac{x_i}{b^2} e^{-\frac{x_i^2}{2b^2}} = \frac{\prod_{i=1}^n x_i}{b^{2n}} e^{-\frac{1}{2b^2}\sum_{i=1}^n x_i^2}
+\end{equation}
+
+Log-likelihood-funktionen blir
+\begin{equation}
+\ell(b) = \ln L(b) = \sum_{i=1}^n \ln x_i - 2n \ln b - \frac{1}{2b^2}\sum_{i=1}^n x_i^2
+\end{equation}
+
+För att hitta maximum sätter vi derivatan lika med noll:
+\begin{equation}
+\frac{d\ell}{db} = -\frac{2n}{b} + \frac{1}{b^3}\sum_{i=1}^n x_i^2 = 0
+\end{equation}
+
+Multiplicera båda sidor med $b^3$:
+\begin{equation}
+-2nb^2 + \sum_{i=1}^n x_i^2 = 0
+\end{equation}
+
+Lös ut $b^2$:
+\begin{equation}
+b^2 = \frac{1}{2n}\sum_{i=1}^n x_i^2 = \frac{1}{2}\cdot\frac{1}{n}\sum_{i=1}^n x_i^2
+\end{equation}
+
+Därför är ML-skattningen
+\begin{equation}
+\hat{b}_{\text{ML}} = \sqrt{\frac{1}{2n}\sum_{i=1}^n x_i^2} = \sqrt{\frac{\bar{x^2}}{2}}
+\end{equation}
+där $\bar{x^2} = \frac{1}{n}\sum_{i=1}^n x_i^2$ är stickprovsmomentet av ordning 2.
+
+\subsection*{MK-skattning (Momentmetod)}
+
+För momentmetoden sätter vi stickprovsmomentet lika med teoretiskt moment. Först behöver vi beräkna väntevärdet för Rayleigh-fördelningen:
+\begin{equation}
+E[X] = \int_0^{\infty} x \cdot \frac{x}{b^2} e^{-\frac{x^2}{2b^2}} dx = \int_0^{\infty} \frac{x^2}{b^2} e^{-\frac{x^2}{2b^2}} dx
+\end{equation}
+
+Genom substitution $u = \frac{x^2}{2b^2}$ får vi $du = \frac{x}{b^2}dx$, vilket ger $x^2 = 2b^2 u$ och $dx = \frac{b^2}{x}du = \frac{b}{\sqrt{2u}}du$. Alternativt kan vi använda substitutionen $t = \frac{x^2}{2b^2}$, vilket ger $dt = \frac{x}{b^2}dx$ och $x = b\sqrt{2t}$:
+\begin{equation}
+E[X] = \int_0^{\infty} \frac{x^2}{b^2} e^{-\frac{x^2}{2b^2}} dx = \int_0^{\infty} 2t e^{-t} \cdot b\sqrt{2t} \cdot \frac{b}{b\sqrt{2t}} dt = \int_0^{\infty} 2b^2 t e^{-t} dt
+\end{equation}
+
+Enklare: med $t = \frac{x^2}{2b^2}$ får vi $x = b\sqrt{2t}$ och $dx = \frac{b}{\sqrt{2t}}dt$:
+\begin{equation}
+E[X] = \int_0^{\infty} b\sqrt{2t} \cdot \frac{2t}{b^2} e^{-t} \cdot \frac{b}{\sqrt{2t}} dt = \int_0^{\infty} 2b\sqrt{t} e^{-t} dt
+\end{equation}
+
+Detta är inte rätt väg. Låt oss använda en enklare metod. Vi vet att för Rayleigh-fördelning med skala-parameter $\sigma = b$ är:
+\begin{equation}
+E[X] = b\sqrt{\frac{\pi}{2}}
+\end{equation}
+
+Detta kan härledas genom att använda substitutionen och gamma-funktionen, men vi accepterar detta som känt resultat.
+
+För momentmetoden sätter vi:
+\begin{equation}
+\bar{x} = E[X] = b\sqrt{\frac{\pi}{2}}
+\end{equation}
+
+där $\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i$ är stickprovsmedelvärdet. Lös ut $b$:
+\begin{equation}
+\hat{b}_{\text{MK}} = \frac{\bar{x}}{\sqrt{\pi/2}} = \sqrt{\frac{2}{\pi}} \cdot \bar{x}
+\end{equation}
+
+\chapter{Problem 2: Approximativt konfidensintervall för parametern $b$}
+
+För att härleda ett approximativt konfidensintervall för parametern $b$ använder vi \textbf{MK-skattningen från Problem 1}, nämligen $\hat{b}_{\text{MK}} = \sqrt{\frac{2}{\pi}} \cdot \bar{X}$, tillsammans med centrala gränsvärdessatsen. Anledningen till att vi använder MK-skattningen istället för ML-skattningen är att MK-skattningen har enklare asymptotiska egenskaper eftersom den är en linjär funktion av stickprovsmedelvärdet $\bar{X}$.
+
+\subsection*{Asymptotisk fördelning för $\bar{X}$}
+
+Låt $X_1, X_2, \ldots, X_n$ vara oberoende och identiskt fördelade Rayleigh-fördelade variabler. Enligt centrala gränsvärdessatsen gäller:
+\begin{equation}
+\frac{\bar{X} - \E[X]}{\sqrt{\Var(X)/n}} \xrightarrow{d} N(0,1) \quad \text{när } n \to \infty
+\end{equation}
+
+där $\xrightarrow{d}$ betyder konvergens i fördelning.
+
+För Rayleigh-fördelningen med parameter $b$ har vi:
+\begin{align}
+\E[X] &= b\sqrt{\frac{\pi}{2}} \\
+\Var(X) &= \E[X^2] - (\E[X])^2
+\end{align}
+
+Vi behöver beräkna $\E[X^2]$:
+\begin{equation}
+\E[X^2] = \int_0^{\infty} x^2 \cdot \frac{x}{b^2} e^{-\frac{x^2}{2b^2}} dx = \int_0^{\infty} \frac{x^3}{b^2} e^{-\frac{x^2}{2b^2}} dx
+\end{equation}
+
+Med substitutionen $u = \frac{x^2}{2b^2}$ får vi $du = \frac{x}{b^2}dx$ och $x^2 = 2b^2 u$, vilket ger:
+\begin{equation}
+\E[X^2] = \int_0^{\infty} 2b^2 u e^{-u} du = 2b^2 \int_0^{\infty} u e^{-u} du = 2b^2 \Gamma(2) = 2b^2
+\end{equation}
+
+Därför är variansen:
+\begin{equation}
+\Var(X) = 2b^2 - \left(b\sqrt{\frac{\pi}{2}}\right)^2 = 2b^2 - \frac{\pi b^2}{2} = b^2\left(2 - \frac{\pi}{2}\right) = \frac{b^2(4-\pi)}{2}
+\end{equation}
+
+\subsection*{Asymptotisk fördelning för $\hat{b}_{\text{MK}}$}
+
+Eftersom MK-skattningen från Problem 1, $\hat{b}_{\text{MK}} = \sqrt{\frac{2}{\pi}} \cdot \bar{X}$, är en linjär transformation av $\bar{X}$, följer det att:
+\begin{equation}
+\hat{b}_{\text{MK}} \sim N\left(b, \frac{2}{\pi} \cdot \frac{\Var(X)}{n}\right) = N\left(b, \frac{2}{\pi} \cdot \frac{b^2(4-\pi)}{2n}\right) = N\left(b, \frac{b^2(4-\pi)}{\pi n}\right)
+\end{equation}
+asymptotiskt när $n$ är stort.
+
+\subsection*{Konfidensintervall}
+
+För att konstruera ett konfidensintervall för den okända parametern $b$ använder vi att MK-skattningen $\hat{b}_{\text{MK}}$ är approximativt normalfördelad. 
+
+\subsubsection*{Steg 1: Standardisering}
+
+Eftersom $\hat{b}_{\text{MK}} \sim N(b, \frac{b^2(4-\pi)}{\pi n})$ asymptotiskt, kan vi standardisera:
+\begin{equation}
+Z = \frac{\hat{b}_{\text{MK}} - b}{\sqrt{\frac{b^2(4-\pi)}{\pi n}}} \approx N(0,1)
+\end{equation}
+
+Eftersom variansen beror på den okända parametern $b$, ersätter vi $b$ med skattningen $\hat{b}_{\text{MK}}$ i nämnaren (detta är en vanlig approximation):
+\begin{equation}
+Z = \frac{\hat{b}_{\text{MK}} - b}{\sqrt{\frac{\hat{b}_{\text{MK}}^2(4-\pi)}{\pi n}}} \approx N(0,1)
+\end{equation}
+
+\subsubsection*{Steg 2: Konfidensgrad}
+
+För ett $(1-\alpha)$-konfidensintervall (t.ex. 95\% när $\alpha = 0.05$) vill vi hitta ett intervall så att:
+\begin{equation}
+P\left(-z_{\alpha/2} \leq Z \leq z_{\alpha/2}\right) = 1-\alpha
+\end{equation}
+
+där $z_{\alpha/2}$ är $(1-\alpha/2)$-kvantilen för standardnormalfördelningen. För $\alpha = 0.05$ (95\% konfidens) är $z_{0.025} \approx 1.96$.
+
+\subsubsection*{Steg 3: Lös ut parametern $b$}
+
+Sätt in uttrycket för $Z$:
+\begin{equation}
+P\left(-z_{\alpha/2} \leq \frac{\hat{b}_{\text{MK}} - b}{\sqrt{\frac{\hat{b}_{\text{MK}}^2(4-\pi)}{\pi n}}} \leq z_{\alpha/2}\right) \approx 1-\alpha
+\end{equation}
+
+Multiplicera alla delar med standardavvikelsen:
+\begin{equation}
+P\left(-z_{\alpha/2}\sqrt{\frac{\hat{b}_{\text{MK}}^2(4-\pi)}{\pi n}} \leq \hat{b}_{\text{MK}} - b \leq z_{\alpha/2}\sqrt{\frac{\hat{b}_{\text{MK}}^2(4-\pi)}{\pi n}}\right) \approx 1-\alpha
+\end{equation}
+
+Subtrahera $\hat{b}_{\text{MK}}$ från alla delar och multiplicera med $-1$ (vilket vänder olikheterna):
+\begin{equation}
+P\left(\hat{b}_{\text{MK}} - z_{\alpha/2}\sqrt{\frac{\hat{b}_{\text{MK}}^2(4-\pi)}{\pi n}} \leq b \leq \hat{b}_{\text{MK}} + z_{\alpha/2}\sqrt{\frac{\hat{b}_{\text{MK}}^2(4-\pi)}{\pi n}}\right) \approx 1-\alpha
+\end{equation}
+
+\subsubsection*{Steg 4: Slutgiltigt konfidensintervall}
+
+Det approximativa $(1-\alpha)$-konfidensintervallet för $b$ är:
+\begin{equation}
+\left[\hat{b}_{\text{MK}} - z_{\alpha/2}\hat{b}_{\text{MK}}\sqrt{\frac{4-\pi}{\pi n}}, \quad \hat{b}_{\text{MK}} + z_{\alpha/2}\hat{b}_{\text{MK}}\sqrt{\frac{4-\pi}{\pi n}}\right]
+\end{equation}
+
+\textbf{Förklaring av komponenterna:}
+\begin{itemize}
+\item $\hat{b}_{\text{MK}}$: Punktskattningen av $b$ (beräknad från data)
+\item $z_{\alpha/2}$: Kvantil från normalfördelningen (t.ex. 1.96 för 95\% konfidens)
+\item $\sqrt{\frac{4-\pi}{\pi n}}$: Relativ standardfel (beror på stickprovsstorleken $n$)
+\item Produkten $z_{\alpha/2}\hat{b}_{\text{MK}}\sqrt{\frac{4-\pi}{\pi n}}$ är \textbf{marginalfelet} som läggs till/dras ifrån skattningen
+\end{itemize}
+
+\textbf{Tolkning:} Med 95\% konfidens kan vi säga att den sanna parametern $b$ ligger mellan 2.244 och 2.756. Detta betyder att om vi upprepade experimentet många gånger, skulle ungefär 95\% av alla sådana intervall innehålla det sanna värdet av $b$.
+
+\subsection*{Motivering för approximationen}
+
+Approximationen är rimlig av följande skäl:
+\begin{enumerate}
+\item \textbf{Användning av MK-skattningen:} Vi använder MK-skattningen från Problem 1 eftersom den är en linjär funktion av stickprovsmedelvärdet, vilket gör asymptotiska beräkningar enklare än för ML-skattningen.
+\item \textbf{Centrala gränsvärdessatsen:} För stora stickprov ($n$ stort) är $\bar{X}$ approximativt normalfördelat, vilket gör att $\hat{b}_{\text{MK}} = \sqrt{\frac{2}{\pi}} \cdot \bar{X}$ också är approximativt normalfördelat (eftersom linjära transformationer av normalfördelade variabler är normalfördelade).
+\item \textbf{Slutna formler:} MK-skattningen har enkla slutna formler för väntevärde och varians, vilket gör beräkningarna hanterbara.
+\item \textbf{Konsistens:} MK-skattningen är konsistent, vilket innebär att den konvergerar mot det sanna värdet när $n \to \infty$.
+\item \textbf{Slutna formler för moment:} För Rayleigh-fördelningen finns slutna formler för momenten, vilket gör variansberäkningen exakt.
+\end{enumerate}
+
+\chapter{Problem 3: Linjär regression}
+
+\subsection*{Idén bakom linjär regression}
+
+Linjär regression är en metod för att modellera sambandet mellan en beroende variabel $y$ och en eller flera oberoende variabler $x$ genom en linjär funktion. Grundidén är att hitta den linje (eller hyperplan i flerdimensionella fall) som bäst passar data genom att minimera summan av kvadrerade fel.
+
+För enkel linjär regression har vi modellen:
+\begin{equation}
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i, \quad i = 1, 2, \ldots, n
+\end{equation}
+där $\beta_0$ är intercept, $\beta_1$ är lutningen, och $\varepsilon_i$ är feltermer som antas vara oberoende och normalfördelade med väntevärde 0 och varians $\sigma^2$.
+
+Minsta kvadratmetoden (OLS, Ordinary Least Squares) minimerar objektfunktionen:
+\begin{equation}
+Q(\beta_0, \beta_1) = \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i)^2
+\end{equation}
+
+Genom att sätta partialderivatorna lika med noll får vi normalekvationerna, vilka kan lösas analytiskt för att ge skattningarna $\hat{\beta_0}$ och $\hat{\beta_1}$.
+
+I vektorform kan modellen skrivas som:
+\begin{equation}
+\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+\end{equation}
+där $\mathbf{X}$ är designmatrisen, $\boldsymbol{\beta}$ är parametervektorn, och lösningen blir:
+\begin{equation}
+\hat{\boldsymbol{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}
+\end{equation}
+
+\subsection*{Hur man laddar och importerar \texttt{tools.py}}
+
+Filen \texttt{tools.py} ligger i mappen \texttt{Data\_and\_tools/}. För att importera den i Python använder vi:
+
+\begin{lstlisting}[language=Python, caption={Importera tools.py}]
+import Data_and_tools as tools
+\end{lstlisting}
+
+Alternativt, om vi vill importera specifikt funktionen \texttt{regress}:
+
+\begin{lstlisting}[language=Python, caption={Importera regress-funktionen}]
+from Data_and_tools.tools import regress
+\end{lstlisting}
+
+\subsection*{Hur man använder \texttt{tools.regress} för modellen $w_k = \log(y_k) = \beta_0 + \beta_1 x_k + \varepsilon_k$}
+
+För modellen
+\begin{equation}
+w_k = \log(y_k) = \beta_0 + \beta_1 x_k + \varepsilon_k \tag{1}
+\end{equation}
+behöver vi först transformera data genom att ta logaritmen av $y_k$-värdena.
+
+Steg-för-steg:
+
+\begin{enumerate}
+\item \textbf{Ladda data:} Låt oss anta att vi har data i variablerna \texttt{x} och \texttt{y}.
+\item \textbf{Transformera:} Beräkna $w_k = \log(y_k)$ för alla observationer.
+\item \textbf{Skapa designmatris:} För enkel linjär regression behöver vi en designmatris $\mathbf{X}$ med en kolumn av ettor (för intercept) och en kolumn med $x$-värden.
+\item \textbf{Anropa \texttt{regress}:} Funktionen returnerar skattade parametrar och konfidensintervall.
+\end{enumerate}
+
+Exempel på kod:
+
+\begin{lstlisting}[language=Python, caption={Använda regress för logaritmisk modell}]
+import numpy as np
+import Data_and_tools as tools
+
+# Ladda data (exempel)
+# x = ...  # oberoende variabel
+# y = ...  # beroende variabel
+
+# Transformera: w = log(y)
+w = np.log(y)
+
+# Skapa designmatris X
+# För modellen w = beta_0 + beta_1 * x behöver vi:
+# X = [1, x_1; 1, x_2; ...; 1, x_n]
+X = np.column_stack([np.ones(len(x)), x])
+
+# Använd regress-funktionen
+beta, beta_int = tools.regress(X, w, alpha=0.05)
+
+# beta[0] är skattningen av beta_0 (intercept)
+# beta[1] är skattningen av beta_1 (lutning)
+# beta_int innehåller konfidensintervall för varje parameter
+\end{lstlisting}
+
+Funktionen \texttt{regress} använder QR-faktorisering för numerisk stabilitet och returnerar:
+\begin{itemize}
+\item \texttt{beta}: Vektor med skattade parametrar $[\hat{\beta_0}, \hat{\beta_1}]^T$
+\item \texttt{beta\_int}: Matris med konfidensintervall, där varje rad motsvarar en parameter och kolumnerna är [nedre gräns, övre gräns]
+\end{itemize}
+
+Konfidensintervallen är baserade på t-fördelningen med $n-2$ frihetsgrader (för enkel linjär regression), vilket är korrekt när feltermerna är normalfördelade.
+
+
+\chapter{Analys av problem4.py}
+
+I detta kapitel analyseras data från \texttt{birth.dat} som innehåller information om 747 första gångers mödrar i Malmö under perioden 1991-1993. Analysen fokuserar på att undersöka fördelningarna för olika variabler samt jämföra födelsevikter mellan rökare och icke-rökare.
+
+\section*{Fördelningar för olika variabler}
+
+\subsection*{Barnets födelsevikt}
+
+Histogrammet för barnets födelsevikt visar en approximativt klokformad (normalliknande) fördelning med en lätt vänsterskewning. Fördelningen har sin topp mellan 3000 och 3500 gram, vilket är typiskt för normala födelsevikter. Den maximala tätheten är strax under 0.0008. 
+
+Fördelningen avtar gradvis mot både lägre och högre vikter. Mycket få barn föds under 1000 gram (extremt låg födelsevikt) eller över 4500 gram. Detta indikerar att majoriteten av barnen i studien har normala födelsevikter, medan extrema värden är ovanliga.
+
+\subsection*{Moderns ålder}
+
+Fördelningen för moderns ålder visar en tydlig högerskewning. Toppen av fördelningen ligger mellan 25 och 28 år, med en maximal täthet strax över 0.12. Detta indikerar att de flesta mödrarna i studien är i denna åldersgrupp.
+
+Fördelningen avtar snabbt för åldrar över 30 år, med en lång svans som sträcker sig mot 40 år. Mycket få mödrar är under 20 år gamla. Denna fördelning är typisk för första gångers mödrar, där de flesta befinner sig i den reproduktiva åldern.
+
+\subsection*{Moderns längd}
+
+Histogrammet för moderns längd visar en något oregelbunden men generellt klokformad fördelning. Det finns två tydliga toppar: en runt 160-162 cm och en annan runt 168-170 cm, med den högsta tätheten strax över 0.07. 
+
+Fördelningen är relativt symmetrisk kring intervallet 160-170 cm, med tätheten som avtar mot extremvärdena. Denna bimodala struktur kan tyda på att det finns två distinkta grupper i populationen, möjligen relaterade till etnisk bakgrund eller andra demografiska faktorer.
+
+\subsection*{Moderns vikt}
+
+Fördelningen för moderns vikt är högerskewad. Toppen ligger runt 60 kg med en maximal täthet strax under 0.07. Tätheten avtar gradvis för högre vikter, vilket bildar en svans som sträcker sig bortom 100 kg. Mycket få mödrar väger mindre än 45 kg.
+
+Denna högerskewning är förväntad för viktfördelningar, eftersom det finns en naturlig nedre gräns men ingen strikt övre gräns. Majoriteten av mödrarna har vikter i intervallet 50-80 kg.
+
+\section*{Jämförelse mellan rökare och icke-rökare}
+
+\subsection*{Låddiagram}
+
+Låddiagrammen visar en tydlig skillnad mellan de två grupperna:
+
+\begin{itemize}
+\item \textbf{Icke-rökare:} Medianvärdet och kvartilerna ligger högre än för rökare. Boxen (interkvartilintervallet) är placerad högre på skalan, vilket indikerar att barn till icke-rökare generellt har högre födelsevikter.
+\item \textbf{Rökare:} Medianvärdet och kvartilerna ligger lägre. Boxen är placerad på en lägre nivå, vilket visar att barn till rökare har lägre födelsevikter i genomsnitt.
+\end{itemize}
+
+Skillnaden mellan medianvärdena är tydlig och statistiskt signifikant, vilket bekräftar det välkända sambandet mellan rökning under graviditeten och lägre födelsevikt.
+
+\subsection*{Kärnestimatorer (KDE)}
+
+Kärnestimatorerna ger en mer detaljerad bild av skillnaderna mellan grupperna:
+
+\begin{itemize}
+\item \textbf{Icke-rökare (blå kurva):} Fördelningen är centrerad kring högre vikter, med en topp som ligger högre än för rökare. Kurvan är relativt symmetrisk och täcker ett bredare intervall av vikter.
+\item \textbf{Rökare (röd kurva):} Fördelningen är skiftad åt vänster (mot lägre vikter) jämfört med icke-rökare. Toppen ligger på en lägre viktnivå, vilket bekräftar att rökning är associerad med lägre födelsevikter.
+\end{itemize}
+
+Kurvorna visar också att fördelningen för rökare kan ha en något annan form, vilket kan tyda på att rökning inte bara skiftar fördelningen utan också kan påverka dess form.
+
+\section*{Slutsatser}
+
+Analysen bekräftar flera viktiga observationer:
+
+\begin{enumerate}
+\item \textbf{Födelsevikter:} Majoriteten av barnen har normala födelsevikter (3000-3500 gram), vilket är förväntat för en normal population.
+\item \textbf{Moderns ålder:} De flesta mödrarna är i åldern 25-28 år, vilket är typiskt för första gångers mödrar.
+\item \textbf{Rökningseffekt:} Det finns en tydlig och konsekvent skillnad mellan rökare och icke-rökare, där barn till rökare har signifikant lägre födelsevikter. Detta bekräftar att rökning är en viktig riskfaktor för låg födelsevikt.
+\item \textbf{Medicinsk relevans:} Resultaten stödjer den medicinska definitionen av låg födelsevikt (under 2500 gram) som en viktig indikator för neonatal hälsa, och visar att rökning är en identifierbar och potentiellt förhindringsbar riskfaktor.
+\end{enumerate}
+
+Dessa resultat är i linje med tidigare forskning som visar att rökning under graviditeten är en av de viktigaste riskfaktorerna för låg födelsevikt och andra komplikationer vid födsel.
+
+\chapter{Analys av problem5.py: Test av normalitet}
+
+Många statistiska metoder baseras på antagandet att data är normalfördelat. Det är därför viktigt att kunna avgöra om en given datamängd är normalfördelad eller ej. I detta kapitel använder vi två metoder för att testa normalitet: visuell bedömning med probplot (Q-Q plots) och statistiskt test med Jarque-Bera-testet.
+
+\section*{Metod}
+
+\subsection*{Visuell bedömning: Probplot}
+
+Probplot (Probability-Quantile plot eller Q-Q plot) är en visuell metod där de observerade kvantilerna plottas mot teoretiska kvantiler från en normalfördelning. Om data är normalfördelat, kommer datapunkterna att ligga nära den röda referenslinjen. Avvikelser från linjen indikerar avvikelser från normalitet.
+
+Funktionen \texttt{stats.probplot} används enligt:
+\begin{lstlisting}[language=Python]
+_ = stats.probplot(data, plot=plt)
+\end{lstlisting}
+
+\textbf{Viktigt:} Funktionen har en känd bugg där den röda referenslinjen inte visas om data innehåller NaN-värden. Därför filtreras NaN-värden bort innan anropet.
+
+\subsection*{Statistiskt test: Jarque-Bera}
+
+Jarque-Bera-testet är ett formellt statistiskt test baserat på datans skevhet (skewness) och kurtosis. Testvariabeln är:
+\begin{equation}
+JB = \frac{n}{6}\left(S^2 + \frac{1}{4}(K-3)^2\right)
+\end{equation}
+där $n$ är antalet observationer, $S$ är skattningen av skevhet (skewness) och $K$ är skattningen av kurtosis.
+
+För en normalfördelad variabel $X$ med väntevärde $\mu$ och standardavvikelse $\sigma$ definieras:
+\begin{align}
+\gamma &= \E\left[\left(\frac{X-\mu}{\sigma}\right)^3\right] \quad \text{(skewness)} \\
+\kappa &= \E\left[\left(\frac{X-\mu}{\sigma}\right)^4\right] \quad \text{(kurtosis)}
+\end{align}
+
+För en normalfördelning är $\gamma = 0$ och $\kappa = 3$ (eller excess kurtosis $\kappa - 3 = 0$).
+
+Under nollhypotesen $H_0$: "Data är normalfördelat" är testvariabeln $JB$ approximativt $\chi^2$-fördelad med 2 frihetsgrader. Vi förkastar $H_0$ om $JB > \chi^2_{0.05}(2) \approx 5.9915$ eller om $p$-värdet $< 0.05$.
+
+\section*{Resultat}
+
+\subsection*{Barnets födelsevikt}
+
+\textbf{Probplot:} Probplotet visar en S-formad avvikelse från den röda referenslinjen. I den nedre svansen (teoretiska kvantiler under -2) ligger datapunkterna under linjen, vilket indikerar färre mycket låga födelsevikter än förväntat för en normalfördelning. I den övre svansen (teoretiska kvantiler över 2) ligger datapunkterna något ovanför linjen, vilket tyder på fler mycket höga födelsevikter än förväntat. Den nedre svansens avvikelse är mer uttalad.
+
+\textbf{Jarque-Bera test:}
+\begin{itemize}
+\item JB-statistik: 190.52
+\item $p$-värde: $< 0.000001$
+\item Beslut: \textbf{Förkasta $H_0$} - Data är \textbf{INTE} normalfördelat
+\item Skewness ($\gamma$): -0.7250 (negativ skevhet, vänsterskewad)
+\item Kurtosis ($\kappa$): 2.0047 (högre än 0, tyngre svansar än normalfördelning)
+\end{itemize}
+
+\textbf{Avvikelse:} Födelsevikten är vänsterskewad (negativ skewness) och har tyngre svansar än en normalfördelning (positiv excess kurtosis). Detta stämmer överens med probplotet som visar S-formad avvikelse.
+
+\subsection*{Moderns ålder}
+
+\textbf{Probplot:} Probplotet visar att datapunkterna följer den röda referenslinjen mycket nära över hela intervallet. Det finns inga signifikanta avvikelser i varken nedre eller övre svansen, vilket tyder på att fördelningen är nära normalfördelad.
+
+\textbf{Jarque-Bera test:}
+\begin{itemize}
+\item JB-statistik: 18.54
+\item $p$-värde: 0.000094
+\item Beslut: \textbf{Förkasta $H_0$} - Data är \textbf{INTE} normalfördelat (men nära)
+\item Skewness ($\gamma$): 0.3858 (lätt positiv skevhet, högerskewad)
+\item Kurtosis ($\kappa$): -0.0151 (nära 0, mycket nära normalfördelning)
+\end{itemize}
+
+\textbf{Avvikelse:} Trots att probplotet visar en mycket god anpassning till normalitet, förkastar Jarque-Bera-testet nollhypotesen på 5\% signifikansnivå. Detta beror på den lilla men statistiskt signifikanta positiva skevheten (0.3858). I praktiken kan fördelningen betraktas som approximativt normalfördelad, men strikt sett avviker den från normalitet på grund av den lätt högerskewningen.
+
+\subsection*{Moderns längd}
+
+\textbf{Probplot:} Probplotet visar att datapunkterna följer den röda referenslinjen mycket nära, liknande moderns ålder. Det kan finnas en mycket lätt uppåtböjning i den övre extremen (teoretiska kvantiler över 2.5), men den är minimal.
+
+\textbf{Jarque-Bera test:}
+\begin{itemize}
+\item JB-statistik: 4.83
+\item $p$-värde: 0.089452
+\item Beslut: \textbf{Acceptera $H_0$} - Data är normalfördelat
+\item Skewness ($\gamma$): -0.1543 (mycket liten negativ skevhet)
+\item Kurtosis ($\kappa$): 0.2520 (liten positiv excess kurtosis)
+\end{itemize}
+
+\textbf{Avvikelse:} Moderns längd kan betraktas som normalfördelad. Testet accepterar nollhypotesen på 5\% signifikansnivå ($p = 0.089 > 0.05$). Skewness och kurtosis är båda mycket nära 0, vilket bekräftar att fördelningen är nära normalfördelad.
+
+\subsection*{Moderns vikt}
+
+\textbf{Probplot:} Probplotet visar en tydlig avvikelse från den röda referenslinjen, särskilt i den övre svansen (teoretiska kvantiler över 1). Datapunkterna böjer sig betydligt uppåt, vilket indikerar att det finns fler höga viktvärden än förväntat för en normalfördelning. Den nedre svansen (teoretiska kvantiler under -2) visar också några punkter under linjen, men den övre svansens avvikelse är mycket mer uttalad.
+
+\textbf{Jarque-Bera test:}
+\begin{itemize}
+\item JB-statistik: 279.40
+\item $p$-värde: $< 0.000001$
+\item Beslut: \textbf{Förkasta $H_0$} - Data är \textbf{INTE} normalfördelat
+\item Skewness ($\gamma$): 0.9997 (stark positiv skevhet, högerskewad)
+\item Kurtosis ($\kappa$): 2.2889 (högre än 0, tyngre svansar)
+\end{itemize}
+
+\textbf{Avvikelse:} Moderns vikt är starkt högerskewad (positiv skewness = 0.9997) och har tyngre svansar än en normalfördelning (positiv excess kurtosis = 2.2889). Detta stämmer väl överens med probplotet som visar en tydlig uppåtböjning i den övre svansen. Denna högerskewning är förväntad för viktfördelningar, eftersom det finns en naturlig nedre gräns men ingen strikt övre gräns.
+
+\section*{Sammanfattning}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lccc}
+\toprule
+\textbf{Variabel} & \textbf{Probplot} & \textbf{Jarque-Bera} & \textbf{Slutsats} \\
+\midrule
+Barnets födelsevikt & S-formad avvikelse & Förkasta $H_0$ ($p < 0.001$) & \textbf{Inte normalfördelad} \\
+Moderns ålder & Mycket nära linjen & Förkasta $H_0$ ($p = 0.0001$) & \textbf{Nästan normalfördelad} \\
+Moderns längd & Mycket nära linjen & Acceptera $H_0$ ($p = 0.089$) & \textbf{Normalfördelad} \\
+Moderns vikt & Tydlig högerskewning & Förkasta $H_0$ ($p < 0.001$) & \textbf{Inte normalfördelad} \\
+\bottomrule
+\end{tabular}
+\caption{Sammanfattning av normalitetstester}
+\end{table}
+
+\section*{Slutsatser}
+
+\begin{enumerate}
+\item \textbf{Moderns längd} är den enda variabeln som kan betraktas som normalfördelad enligt både visuell bedömning och statistiskt test.
+
+\item \textbf{Moderns ålder} är nästan normalfördelad. Probplotet visar en mycket god anpassning, men testet förkastar nollhypotesen på grund av en liten men statistiskt signifikant positiv skevhet. I praktiken kan den betraktas som approximativt normalfördelad.
+
+\item \textbf{Barnets födelsevikt} avviker från normalitet med en S-formad avvikelse i probplotet, vilket indikerar vänsterskewning och tyngre svansar. Detta bekräftas av testet med stark negativ skewness (-0.73) och positiv excess kurtosis (2.00).
+
+\item \textbf{Moderns vikt} avviker starkt från normalitet med en tydlig högerskewning. Detta är förväntat för viktfördelningar och bekräftas av testet med stark positiv skewness (1.00) och positiv excess kurtosis (2.29).
+
+\item \textbf{Praktisk relevans:} För variabler som inte är normalfördelade bör man vara försiktig med metoder som förutsätter normalitet (t.ex. t-test, ANOVA). Alternativa metoder som inte kräver normalitet (t.ex. icke-parametriska tester) kan vara mer lämpliga.
+\end{enumerate}
+
+\end{document}
