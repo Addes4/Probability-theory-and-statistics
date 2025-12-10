@@ -66,37 +66,6 @@ print(f"log(födelsevikt) = {beta[0]:.4f} + {beta[1]:.4f} * ålder")
 print(f"eller:")
 print(f"födelsevikt = exp({beta[0]:.4f} + {beta[1]:.4f} * ålder)")
 
-# Steg 5: Visualisera resultatet
-plt.figure(figsize=(12, 5))
-
-# Subplot 1: Scatter plot med anpassad linje
-plt.subplot(1, 2, 1)
-plt.scatter(x, w, alpha=0.5, s=10, label='Data')
-# Plotta anpassad linje
-x_line = np.linspace(np.min(x), np.max(x), 100)
-w_line = beta[0] + beta[1] * x_line
-plt.plot(x_line, w_line, 'r-', linewidth=2, label=f'Anpassad linje: w = {beta[0]:.3f} + {beta[1]:.3f}x')
-plt.xlabel('Moderns ålder (år)')
-plt.ylabel('log(Födelsevikt)')
-plt.title('Linjär regression: log(födelsevikt) vs ålder')
-plt.legend()
-plt.grid(True, alpha=0.3)
-
-# Subplot 2: Scatter plot i original skala (y istället för w)
-plt.subplot(1, 2, 2)
-plt.scatter(x, y, alpha=0.5, s=10, label='Data')
-# Plotta anpassad kurva i original skala
-y_line = np.exp(beta[0] + beta[1] * x_line)
-plt.plot(x_line, y_line, 'r-', linewidth=2, label='Anpassad kurva')
-plt.xlabel('Moderns ålder (år)')
-plt.ylabel('Födelsevikt (gram)')
-plt.title('Exponentiell modell: födelsevikt vs ålder')
-plt.legend()
-plt.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.show()
-
 print("Slutsats:")
 print(f"Modellen log(y) = {beta[0]:.4f} + {beta[1]:.4f} * x beskriver")
 print(f"sambandet mellan moderns ålder och logaritmen av födelsevikten.")
