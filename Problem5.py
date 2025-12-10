@@ -1,14 +1,13 @@
-## Problem 5: Test av normalitet
 
 import numpy as np
 from scipy import stats
 import matplotlib.pyplot as plt
 import Data_and_tools as tools
 
-# Ladda datafilen.
+# Laddar datafilen
 birth = np.loadtxt('Data_and_tools/birth.dat')
 
-# Extrahera variablerna (samma som i Problem 4)
+# Extrahera variablerna (samma som i 4:an)
 # 1. Barnets födelsevikt (kolonn 3, index 2)
 birth_weight = birth[:, 2]
 birth_weight = birth_weight[~np.isnan(birth_weight)]
@@ -25,11 +24,10 @@ mother_height = mother_height[~np.isnan(mother_height)]
 mother_weight = birth[:, 14]
 mother_weight = mother_weight[~np.isnan(mother_weight)]
 
-## Problem 5: Visuell bedömning med probplot
-# Viktigt: stats.probplot har en bugg - den röda referenslinjen visas inte
-# om data innehåller NaN-värden. Därför filtrerar vi bort NaN först.
+# För att använda Prob plot sorterar vi bort alla NaN 
+# för annars syns inte den röda linjen
 
-# Skapa figur med fyra probplot
+# Skapa figur med fyra probplots
 plt.figure(figsize=(12, 10))
 
 # Probplot 1: Barnets födelsevikt
@@ -59,9 +57,9 @@ plt.grid(True, alpha=0.3)
 plt.tight_layout()
 plt.show()
 
-## Problem 5: Statistiskt test med Jarque-Bera
+# Testar ifall alla är normalfördelade genom Jarque Bera test
 # Signifikansnivå: 5% (alpha = 0.05)
-alpha = 0.05
+ALPHA = 0.05
 
 # Testvariabler
 variables = {
@@ -72,12 +70,12 @@ variables = {
 }
 
 print("\n" + "="*60)
-print("JARQUE-BERA TEST FÖR NORMALITET")
+print("JARQUE-BERA TEST")
 print("Signifikansnivå: 5% (alpha = 0.05)")
 print("="*60)
 
 # Kritisk värde för chi-kvadrat med 2 frihetsgrader
-chi2_critical = stats.chi2.ppf(1 - alpha, df=2)
+chi2_critical = stats.chi2.ppf(1 - ALPHA, df=2)
 
 print(f"\nKritiskt värde (χ² med 2 frihetsgrader): {chi2_critical:.4f}")
 print("\n" + "-"*60)
@@ -88,7 +86,7 @@ for var_name, data in variables.items():
     jb_stat, p_value = stats.jarque_bera(data)
     
     # Beslut: Om p-värde < alpha, förkasta H0 (data är inte normalfördelat)
-    is_normal = p_value >= alpha
+    is_normal = p_value >= ALPHA
     
     print(f"\n{var_name}:")
     print(f"  JB-statistik: {jb_stat:.4f}")
@@ -96,9 +94,9 @@ for var_name, data in variables.items():
     print(f"  Kritisk värde: {chi2_critical:.4f}")
     
     if is_normal:
-        print(f"  Beslut: Acceptera H0 - Data är normalfördelat (p ≥ {alpha})")
+        print(f"  p är större än alfa (p ≥ {ALPHA})")
     else:
-        print(f"  Beslut: Förkasta H0 - Data är INTE normalfördelat (p < {alpha})")
+        print(f"  p är mindre än alfa (p < {ALPHA})")
     
     # Beräkna skevhet och kurtosis för att beskriva avvikelsen
     skewness = stats.skew(data)
