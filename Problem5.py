@@ -84,6 +84,7 @@ for var_name, data in variables.items():
     is_normal = p_value >= ALPHA
     
     print(f"\n{var_name}:")
+    print(f"  Jarque-Bera teststatistika: {jb_stat:.6f}")
     print(f"  p-värde: {p_value:.6f}")
     
     if is_normal:

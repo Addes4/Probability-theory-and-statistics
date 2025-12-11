@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.5)  10 DEC 2025 17:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.12.5)  11 DEC 2025 09:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -456,7 +456,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ]
 
 [2]
-Overfull \hbox (18.77948pt too wide) in paragraph at lines 168--168
+Overfull \hbox (18.77948pt too wide) in paragraph at lines 163--163
 |\OT1/cmr/bx/n/24.88 Problem 2: Ap-prox-i-ma-tivt kon-fi-densin-
  []
 
@@ -465,81 +465,118 @@ Overfull \hbox (18.77948pt too wide) in paragraph at lines 168--168
 [3
 
 ]
+LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <14.4> not available
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 231.
 
-[4]
+
+[4
+
+]
+Overfull \hbox (14.94923pt too wide) in paragraph at lines 258--259
+[]\OT1/cmr/bx/n/12 Standardfel: \OT1/cmr/m/n/12 Stan-dard-felet f[]or var-je pa-ra-me-ter ber[]aknas fr^^Wan di-a-go-na-len av $(\OT1/cmr/bx/n/12 R[]R\OT1/cmr/m/n/12 )[]$,
+ []
+
+
 
 [5{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <14.4> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 308.
- (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
-File: lstlang1.sty 2024/09/23 1.10c listings language file
-)
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10.95> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 313.
-
 
 [6
 
 ]
-LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <12> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 336.
+Overfull \hbox (11.15672pt too wide) in paragraph at lines 345--346
+[]\OT1/cmr/m/n/12 MK-skattning: $[] = [] \OMS/cmsy/m/n/12 ^^A []$ \OT1/cmr/m/n/12 (im-ple-men-te-rad som \OT1/cmtt/m/n/12 np.sqrt(2/np.pi) * np.mean(x)\OT1/cmr/m/n/12 ) 
+ []
+
 
 
 [7]
-
-[8
-
-]
-Overfull \hbox (0.34883pt too wide) in paragraph at lines 433--434
-[]\OT1/cmr/bx/n/12 F[]odelsevikter: \OT1/cmr/m/n/12 Ma-jo-ri-te-ten av bar-nen har nor-ma-la f[]odelsevikter (3000-3500 gram),
+Overfull \hbox (16.71625pt too wide) in paragraph at lines 372--372
+|\OT1/cmr/bx/n/17.28 Problem3.py: Kon-fi-densin-ter-vall f[]or Rayleigh-f[]ordelning| 
  []
 
 
-Overfull \hbox (16.90318pt too wide) in paragraph at lines 436--437
-[]\OT1/cmr/bx/n/12 Medicinsk re-le-vans: \OT1/cmr/m/n/12 Re-sul-ta-ten st[]odjer den me-di-cins-ka de-fi-ni-tio-nen av l^^Wag f[]odelsevikt
- []
 
-
+[8]
 
 [9]
 
 [10
 
 ]
+Overfull \hbox (2.84816pt too wide) in paragraph at lines 482--483
+[]\OT1/cmr/bx/n/12 Non-drinkers (bl^^Wa kur-va): \OT1/cmr/m/n/12 F[]ordelningen []ar n^^Wagot skif-tad mot h[]ogre vik-ter j[]amf[]ort
+ []
+
+
 
 [11]
-Overfull \hbox (71.53366pt too wide) in paragraph at lines 542--552
+Overfull \hbox (57.27217pt too wide) in paragraph at lines 493--494
+[]\OT1/cmr/bx/n/12 K[]arnestimatorer: \OT1/cmr/m/n/12 Anv[]ander \OT1/cmtt/m/n/12 stats.gaussian[]kde() \OT1/cmr/m/n/12 f[]or att ska-pa smi-di-ga f[]ordelningskurvor. 
+ []
+
+
+Overfull \hbox (0.88506pt too wide) in paragraph at lines 495--496
+[]\OT1/cmr/bx/n/12 Dataextraktion: \OT1/cmr/m/n/12 Anv[]ander boo-le-an in-dex-ing f[]or att se-pa-re-ra grup-per (r[]okare/icke-
+ []
+
+
+Overfull \hbox (0.34883pt too wide) in paragraph at lines 503--504
+[]\OT1/cmr/bx/n/12 F[]odelsevikter: \OT1/cmr/m/n/12 Ma-jo-ri-te-ten av bar-nen har nor-ma-la f[]odelsevikter (3000-3500 gram),
+ []
+
+
+Overfull \hbox (16.90318pt too wide) in paragraph at lines 506--507
+[]\OT1/cmr/bx/n/12 Medicinsk re-le-vans: \OT1/cmr/m/n/12 Re-sul-ta-ten st[]odjer den me-di-cins-ka de-fi-ni-tio-nen av l^^Wag f[]odelsevikt
+ []
+
+
+
+[12] (/usr/local/texlive/2025/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2024/09/23 1.10c listings language file
+)
+
+[13
+
+]
+
+[14]
+Overfull \hbox (77.8892pt too wide) in paragraph at lines 612--622
  [][] 
  []
 
 
 
-[12]
-Overfull \hbox (4.77266pt too wide) in paragraph at lines 566--567
+[15]
+Overfull \hbox (28.85776pt too wide) in paragraph at lines 632--633
+[]\OT1/cmr/bx/n/12 Kritiskt v[]arde: \OT1/cmr/m/n/12 Ber[]aknas med \OT1/cmtt/m/n/12 stats.chi2.ppf(1 - ALPHA, df=2) \OT1/cmr/m/n/12 f[]or $\OML/cmm/m/it/12 ^^_[]$\OT1/cmr/m/n/12 -f[]ordelningen
+ []
+
+
+Overfull \hbox (4.77266pt too wide) in paragraph at lines 646--647
 []\OT1/cmr/bx/n/12 Praktisk re-le-vans: \OT1/cmr/m/n/12 F[]or va-ri-ab-ler som in-te []ar nor-malf[]ordelade b[]or man va-ra f[]orsiktig
  []
 
 
 
-[13] (./main.aux)
+[16] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 13840 strings out of 473190
- 267197 string characters out of 5715800
- 1005070 words of memory out of 5000000
- 36953 multiletter control sequences out of 15000+600000
- 576170 words of font info for 102 fonts, out of 8000000 for 9000
+ 13821 strings out of 473190
+ 267004 string characters out of 5715800
+ 859070 words of memory out of 5000000
+ 36933 multiletter control sequences out of 15000+600000
+ 576517 words of font info for 103 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 79i,12n,93p,597b,1329s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on main.pdf (14 pages, 236636 bytes).
+ 79i,10n,93p,597b,1299s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on main.pdf (17 pages, 237507 bytes).
 PDF statistics:
- 141 PDF objects out of 1000 (max. 8388607)
- 88 compressed objects within 1 object stream
+ 150 PDF objects out of 1000 (max. 8388607)
+ 94 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
