@@ -67,6 +67,8 @@ Minsta kvadratmetoden minimerar objektfunktionen:
 Q(\beta_0, \beta_1) = \sum_{i=1}^n (y_i - \beta_0 - \beta_1 x_i)^2
 \end{equation}
 
+Felet kvadreras för att göra alla avvikelser positiva (så att positiva och negativa fel inte tar ut varandra), ge större vikt åt stora fel än små, och göra funktionen matematiskt hanterbar med en unik minimumpunkt.
+
 Genom att sätta partialderivatorna lika med noll får vi normalekvationerna, vilka kan lösas analytiskt för att ge skattningarna $\hat{\beta_0}$ och $\hat{\beta_1}$.
 
 I vektorform kan modellen skrivas som:
@@ -91,7 +93,7 @@ där $\mathbf{y}$ är en vektor av observerade värden med form $(n,)$, $\mathbf
 Funktionen regress har följande egenskaper:
 
 \begin{enumerate}
-\item \textbf{QR-faktorisering:} Funktionen använder QR-faktorisering (np.linalg.qr) för att lösa normalekvationerna numeriskt stabilt, istället för att direkt invertera $\mathbf{X}^T\mathbf{X}$.
+\item \textbf{QR-faktorisering:} Funktionen använder QR-faktorisering för att lösa normalekvationerna numeriskt stabilt, istället för att direkt invertera $\mathbf{X}^T\mathbf{X}$.
 
 \item \textbf{NaN-hantering:} Alla rader som innehåller NaN-värden i antingen $\mathbf{X}$ eller $\mathbf{y}$ filtreras bort innan beräkningarna.
 
