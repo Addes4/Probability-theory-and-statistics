@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1765441596.59202 "/Users/adriansohrabi/Documents/GitHub/Probability-theory-and-statistics/latex/main.tex" "main.pdf" "main" 1765441597.11129 0
-  "/Users/adriansohrabi/Documents/GitHub/Probability-theory-and-statistics/latex/main.tex" 1765441595.84522 34808 dd0f62c79d81072ba04d8677d75c6e94 ""
+["pdflatex"] 1765442189.73836 "/Users/adriansohrabi/Documents/GitHub/Probability-theory-and-statistics/latex/main.tex" "main.pdf" "main" 1765442190.34895 0
+  "/Users/adriansohrabi/Documents/GitHub/Probability-theory-and-statistics/latex/main.tex" 1765442189.64542 34818 c8ca52288449cf036be5dd58f9870e7a ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1136768653 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -117,8 +117,8 @@
   "/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1764926489 5467155 19efa205003f9ecad95fbbaa6ff24da1 ""
   "/usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt" 1764926428 3345738 bb8d320a9c91849903939d5028440143 ""
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
-  "main.aux" 1765441597.05735 377 c1e05e96321d09939c7e45684221dddc "pdflatex"
-  "main.tex" 1765441595.84522 34808 dd0f62c79d81072ba04d8677d75c6e94 ""
+  "main.aux" 1765442190.28782 377 c1e05e96321d09939c7e45684221dddc "pdflatex"
+  "main.tex" 1765442189.64542 34818 c8ca52288449cf036be5dd58f9870e7a ""
   (generated)
   "main.aux"
   "main.log"
