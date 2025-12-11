@@ -100,22 +100,41 @@ där $b > 0$ är en parameter. Givet ett stickprov $x_1, x_2, \ldots, x_n$ ska v
 
 \subsection*{ML-skattning (Maximum Likelihood)}
 
-Likelihood-funktionen för stickprovet är
+Likelihood-funktionen för stickprovet är produkten av täthetsfunktionerna:
 \begin{equation}
-L(b) = \prod_{i=1}^n f_X(x_i) = \prod_{i=1}^n \frac{x_i}{b^2} e^{-\frac{x_i^2}{2b^2}} = \frac{\prod_{i=1}^n x_i}{b^{2n}} e^{-\frac{1}{2b^2}\sum_{i=1}^n x_i^2}
+L(b) = \prod_{i=1}^n f_X(x_i) = \prod_{i=1}^n \frac{x_i}{b^2} e^{-\frac{x_i^2}{2b^2}}
 \end{equation}
 
-Log-likelihood-funktionen blir
+Eftersom produkten av exponentialfunktioner är exponentialfunktionen av summan, kan vi skriva om detta som:
 \begin{equation}
-\ell(b) = \ln L(b) = \sum_{i=1}^n \ln x_i - 2n \ln b - \frac{1}{2b^2}\sum_{i=1}^n x_i^2
+L(b) = \frac{\prod_{i=1}^n x_i}{b^{2n}} \prod_{i=1}^n e^{-\frac{x_i^2}{2b^2}} = \frac{\prod_{i=1}^n x_i}{b^{2n}} e^{-\frac{1}{2b^2}\sum_{i=1}^n x_i^2}
 \end{equation}
 
-För att hitta maximum sätter vi derivatan lika med noll:
+Log-likelihood-funktionen blir (genom att använda logaritmlagarna):
+\begin{align}
+\ell(b) &= \ln L(b) = \ln\left(\frac{\prod_{i=1}^n x_i}{b^{2n}} e^{-\frac{1}{2b^2}\sum_{i=1}^n x_i^2}\right) \\
+&= \ln\left(\prod_{i=1}^n x_i\right) - \ln(b^{2n}) + \ln\left(e^{-\frac{1}{2b^2}\sum_{i=1}^n x_i^2}\right) \\
+&= \sum_{i=1}^n \ln x_i - 2n \ln b - \frac{1}{2b^2}\sum_{i=1}^n x_i^2
+\end{align}
+
+För att hitta maximum sätter vi derivatan lika med noll. Beräkna derivatan term för term:
+\begin{align}
+\frac{d}{db}\left(\sum_{i=1}^n \ln x_i\right) &= 0 \quad \text{(oberoende av $b$)} \\
+\frac{d}{db}(-2n \ln b) &= -\frac{2n}{b} \\
+\frac{d}{db}\left(-\frac{1}{2b^2}\sum_{i=1}^n x_i^2\right) &= \frac{d}{db}\left(-\frac{1}{2}\sum_{i=1}^n x_i^2 \cdot b^{-2}\right) = \frac{1}{b^3}\sum_{i=1}^n x_i^2
+\end{align}
+
+Således är derivatan:
 \begin{equation}
-\frac{d\ell}{db} = -\frac{2n}{b} + \frac{1}{b^3}\sum_{i=1}^n x_i^2 = 0
+\frac{d\ell}{db} = 0 - \frac{2n}{b} + \frac{1}{b^3}\sum_{i=1}^n x_i^2 = -\frac{2n}{b} + \frac{1}{b^3}\sum_{i=1}^n x_i^2
 \end{equation}
 
-Multiplicera båda sidor med $b^3$:
+Sätt derivatan lika med noll:
+\begin{equation}
+-\frac{2n}{b} + \frac{1}{b^3}\sum_{i=1}^n x_i^2 = 0
+\end{equation}
+
+Multiplicera båda sidor med $b^3$ (notera att $b > 0$ så $b^3 \neq 0$):
 \begin{equation}
 -2nb^2 + \sum_{i=1}^n x_i^2 = 0
 \end{equation}
@@ -125,39 +144,70 @@ Lös ut $b^2$:
 b^2 = \frac{1}{2n}\sum_{i=1}^n x_i^2 = \frac{1}{2}\cdot\frac{1}{n}\sum_{i=1}^n x_i^2
 \end{equation}
 
-Därför är ML-skattningen
+Eftersom $b > 0$ tar vi den positiva roten. Därför är ML-skattningen:
 \begin{equation}
 \hat{b}_{\text{ML}} = \sqrt{\frac{1}{2n}\sum_{i=1}^n x_i^2} = \sqrt{\frac{\bar{x^2}}{2}}
 \end{equation}
 där $\bar{x^2} = \frac{1}{n}\sum_{i=1}^n x_i^2$ är stickprovsmomentet av ordning 2.
 
-\subsection*{MK-skattning}
+För att verifiera att detta är ett maximum kan vi kontrollera andraderivatan, men eftersom likelihood-funktionen har ett unikt maximum för $b > 0$ och vi har hittat en kritisk punkt, är detta maximum.
 
-För momentmetoden sätter vi stickprovsmomentet lika med teoretiskt moment. Först behöver vi beräkna väntevärdet för Rayleigh-fördelningen.
+\subsection*{MK-skattning (Momentmetoden)}
 
-För Rayleigh-fördelning med täthetsfunktion $f_X(x) = \frac{x}{b^2} e^{-\frac{x^2}{2b^2}}$ för $x \geq 0$ är väntevärdet:
+För momentmetoden sätter vi stickprovsmomentet lika med teoretiskt moment. Vi använder första momentet (väntevärdet), så vi behöver först beräkna $\E[X]$ för Rayleigh-fördelningen.
+
+Väntevärdet är:
 \begin{equation}
-E[X] = \int_0^{\infty} x \cdot \frac{x}{b^2} e^{-\frac{x^2}{2b^2}} dx
+\E[X] = \int_0^{\infty} x \cdot f_X(x) dx = \int_0^{\infty} x \cdot \frac{x}{b^2} e^{-\frac{x^2}{2b^2}} dx = \int_0^{\infty} \frac{x^2}{b^2} e^{-\frac{x^2}{2b^2}} dx
 \end{equation}
 
-Genom substitution $u = \frac{x^2}{2b^2}$ kan detta beräknas (använder gamma-funktionen), vilket ger det kända resultatet:
+För att beräkna denna integral använder vi substitutionen $u = \frac{x^2}{2b^2}$. Då får vi:
+\begin{align}
+du &= \frac{d}{dx}\left(\frac{x^2}{2b^2}\right) dx = \frac{2x}{2b^2} dx = \frac{x}{b^2} dx \\
+\Rightarrow \quad dx &= \frac{b^2}{x} du
+\end{align}
+
+Eftersom $u = \frac{x^2}{2b^2}$, har vi $x^2 = 2b^2 u$ och $x = b\sqrt{2u}$ (notera att $x \geq 0$). Således:
 \begin{equation}
-E[X] = b\sqrt{\frac{\pi}{2}}
+dx = \frac{b^2}{b\sqrt{2u}} du = \frac{b}{\sqrt{2u}} du
 \end{equation}
+
+När $x = 0$ har vi $u = 0$, och när $x \to \infty$ har vi $u \to \infty$. Sätt in i integralen:
+\begin{align}
+\E[X] &= \int_0^{\infty} \frac{x^2}{b^2} e^{-u} \cdot \frac{b}{\sqrt{2u}} du \\
+&= \int_0^{\infty} \frac{2b^2 u}{b^2} e^{-u} \cdot \frac{b}{\sqrt{2u}} du \\
+&= \int_0^{\infty} 2b\sqrt{u} e^{-u} \cdot \frac{1}{\sqrt{2}} du \\
+&= \frac{2b}{\sqrt{2}} \int_0^{\infty} \sqrt{u} e^{-u} du \\
+&= b\sqrt{2} \int_0^{\infty} u^{1/2} e^{-u} du
+\end{align}
+
+Integralen $\int_0^{\infty} u^{1/2} e^{-u} du$ är gamma-funktionen $\Gamma(3/2)$. Vi vet att:
+\begin{equation}
+\Gamma(3/2) = \Gamma(1/2 + 1) = \frac{1}{2}\Gamma(1/2) = \frac{1}{2}\sqrt{\pi} = \frac{\sqrt{\pi}}{2}
+\end{equation}
+
+där vi använt att $\Gamma(1/2) = \sqrt{\pi}$ och rekursionsformeln $\Gamma(z+1) = z\Gamma(z)$.
+
+Således:
+\begin{equation}
+\E[X] = b\sqrt{2} \cdot \Gamma(3/2) = b\sqrt{2} \cdot \frac{\sqrt{\pi}}{2} = b \cdot \frac{\sqrt{2\pi}}{2} = b\sqrt{\frac{\pi}{2}}
+\end{equation}
+
+Detta är det korrekta väntevärdet för Rayleigh-fördelningen.
 
 För momentmetoden sätter vi stickprovsmedelvärdet lika med teoretiskt väntevärde:
 \begin{equation}
-\bar{x} = E[X] = b\sqrt{\frac{\pi}{2}}
+\bar{x} = \E[X] = b\sqrt{\frac{\pi}{2}}
 \end{equation}
-
-För momentmetoden sätter vi:
-\begin{equation}
-\bar{x} = E[X] = b\sqrt{\frac{\pi}{2}}
-\end{equation}
-
 där $\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i$ är stickprovsmedelvärdet. Lös ut $b$:
+\begin{align}
+\bar{x} &= b\sqrt{\frac{\pi}{2}} \\
+b &= \frac{\bar{x}}{\sqrt{\pi/2}} = \frac{\bar{x}}{\sqrt{\pi}/\sqrt{2}} = \frac{\bar{x}\sqrt{2}}{\sqrt{\pi}} = \sqrt{\frac{2}{\pi}} \cdot \bar{x}
+\end{align}
+
+Därför är MK-skattningen:
 \begin{equation}
-\hat{b}_{\text{MK}} = \frac{\bar{x}}{\sqrt{\pi/2}} = \sqrt{\frac{2}{\pi}} \cdot \bar{x}
+\hat{b}_{\text{MK}} = \sqrt{\frac{2}{\pi}} \cdot \bar{x}
 \end{equation}
 
 \chapter*{Problem 2: Approximativt konfidensintervall för parametern $b$}
